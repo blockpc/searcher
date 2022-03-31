@@ -19,10 +19,11 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(10)->create();
 
+        $features = Feature::factory(20)->create();
+
         for ($i=0; $i < 100; $i++) { 
-            Property::factory()->forUser()
-                ->has(Feature::factory(4))
-                ->create();
+            $property = Property::factory()->forUser()->create();
+            $property->features()->attach($features->random(rand(3, 6))->pluck('id')->toArray());
         }
     }
 }
